@@ -48,6 +48,6 @@ Action
   repeatable (not in the MVP) ? Potentially could have a completion date to
   allow showing it till EOB
 
-  Today Dashboard showing all actions that has due date set for today or in the
+Today Dashboard showing all actions that has due date set for today or in the
   past. Action should also point to the project, so you can easily navigate to
   the project.
