@@ -1,0 +1,18 @@
+{
+    "manifest_version": 3,
+    "name": "Doto",
+    "version": "0.1",
+    "description": "Local first TODO organizer",
+    "permissions": [
+        "storage"
+    ],
+    "action": {
+        "default_popup": "add.html",
+        "default_icon": {
+            "16": "icons/doto.png"
+        }
+    },
+    "icons": {
+        "16": "icons/doto.png"
+    }
+}
