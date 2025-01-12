@@ -1,0 +1,16 @@
+body,
+input {
+    font-size: 2rem;
+    /* Also doubles the text size inside input fields */
+}
+
+/* Style to make the input and button appear on the same line */
+.input-container {
+    display: flex;
+    align-items: center;
+}
+
+#textInput {
+    margin-right: 0.5em;
+    /* Optional: space between input and button */
+}
