@@ -65,7 +65,6 @@ document.addEventListener("DOMContentLoaded", () => {
     })
 
     addButton.addEventListener("click", () => {
-        ß
         saveIdea()
     })
 

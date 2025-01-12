@@ -2,6 +2,7 @@
     "manifest_version": 3,
     "name": "Doto",
     "version": "2025.01.12",
+    "key": "jcglojmlacpdnpjalikknfjmfcoeofmc",
     "description": "Local first TODO organizer",
     "permissions": [
         "storage"
@@ -14,5 +15,14 @@
     },
     "icons": {
         "16": "icons/doto.png"
+    },
+    "commands": {
+        "_execute_action": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+U",
+                "mac": "Command+Shift+U"
+            },
+            "description": "Open add dialog"
+        }
     }
 }
