@@ -14,3 +14,9 @@ input {
     margin-right: 0.5em;
     /* Optional: space between input and button */
 }
+
+#counter {
+    color: grey; /* Sets the text color to grey */
+    font-size: 0.5em; /* Reduces font size to half the normal size */
+    vertical-align: super; /* Positions the text as superscript */
+  }

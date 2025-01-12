@@ -1,5 +1,3 @@
-console.log("extension popup loaded")
-
 const debug = {
     claeaAll: async function () {
         await chrome.storage.session.clear()
@@ -29,7 +27,7 @@ function storeInSession(key, value) {
 }
 
 function _store(storage, key, value) {
-    storage.set({ [key]: textInput.value }, () => {
+    storage.set({ [key]: value }, () => {
         if (chrome.runtime.lastError) {
             console.error("data saving error:", chrome.runtime.lastError)
         }
@@ -39,11 +37,19 @@ function _store(storage, key, value) {
 document.addEventListener("DOMContentLoaded", () => {
     const textInput = document.getElementById("textInput")
     const addButton = document.getElementById("add")
+    const counter = document.getElementById("counter")
 
     chrome.storage.session.get(["textInput"], (result) => {
         if (result.textInput) {
             textInput.value = result.textInput
             setAddButtonState()
+        }
+    })
+
+    chrome.storage.sync.get(["inbox"], (result) => {
+        console.log("inbox", result)
+        if (result.inbox) {
+            counter.innerText = result.inbox.length.toString()
         }
     })
 
@@ -59,6 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
     })
 
     addButton.addEventListener("click", () => {
+        ß
         saveIdea()
     })
 
@@ -69,7 +76,11 @@ document.addEventListener("DOMContentLoaded", () => {
             return
         }
 
-        storeInSync("inbox", idea)
+        chrome.storage.sync.get(["inbox"], (result) => {
+            const ideas = Array.isArray(result.inbox) ? result.inbox : []
+            ideas.push(idea)
+            storeInSync("inbox", ideas)
+        })
 
         clearInputText()
 
