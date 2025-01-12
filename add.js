@@ -52,7 +52,17 @@ document.addEventListener("DOMContentLoaded", () => {
         setAddButtonState()
     })
 
+    textInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+            saveIdea()
+        }
+    })
+
     addButton.addEventListener("click", () => {
+        saveIdea()
+    })
+
+    function saveIdea() {
         const idea = textInput.value.trim()
         if (idea.length === 0) {
             console.warn("skipping writing an empty idea")
@@ -62,7 +72,9 @@ document.addEventListener("DOMContentLoaded", () => {
         storeInSync("inbox", idea)
 
         clearInputText()
-    })
+
+        window.close()
+    }
 
     function clearInputText() {
         textInput.value = ""
