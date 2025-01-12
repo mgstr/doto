@@ -1,21 +1,23 @@
 console.log("extension popup loaded")
 
-async function _claeaAll() {
-    await chrome.storage.session.clear()
-    await chrome.storage.sync.clear()
-    await chrome.storage.local.clear()
-}
+const debug = {
+    claeaAll: async function () {
+        await chrome.storage.session.clear()
+        await chrome.storage.sync.clear()
+        await chrome.storage.local.clear()
+    },
 
-async function _showAll() {
-    await _show(chrome.storage.session)
-    await _show(chrome.storage.sync)
-    await _show(chrome.storage.local)
-}
+    showAll: async function () {
+        await this.show(chrome.storage.session)
+        await this.show(chrome.storage.sync)
+        await this.show(chrome.storage.local)
+    },
 
-async function _show(storage) {
-    return storage.get(null, (data) => {
-        console.log(storage, data)
-    })
+    show: async function (storage) {
+        return storage.get(null, (data) => {
+            console.log(storage, data)
+        })
+    }
 }
 
 function storeInSync(key, value) {
@@ -27,7 +29,6 @@ function storeInSession(key, value) {
 }
 
 function _store(storage, key, value) {
-    console.log(`storing key=${key} value=${value}`)
     storage.set({ [key]: textInput.value }, () => {
         if (chrome.runtime.lastError) {
             console.error("data saving error:", chrome.runtime.lastError)
@@ -36,22 +37,17 @@ function _store(storage, key, value) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("page loaded...")
-
     const textInput = document.getElementById("textInput")
     const addButton = document.getElementById("add")
 
     chrome.storage.session.get(["textInput"], (result) => {
-        console.log("data in the storage:", result)
         if (result.textInput) {
-            console.log("restoring data in the textInput")
             textInput.value = result.textInput
             setAddButtonState()
         }
     })
 
     textInput.addEventListener("input", () => {
-        console.log("input: ", "'" + textInput.value + "'")
         storeInSession("textInput", textInput.value)
         setAddButtonState()
     })
