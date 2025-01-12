@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "Doto",
-    "version": "0.1",
+    "version": "2025.01.12",
     "description": "Local first TODO organizer",
     "permissions": [
         "storage"
