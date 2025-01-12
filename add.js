@@ -1,8 +1,34 @@
 console.log("extension popup loaded")
 
-function store(key, value) {
+async function _claeaAll() {
+    await chrome.storage.session.clear()
+    await chrome.storage.sync.clear()
+    await chrome.storage.local.clear()
+}
+
+async function _showAll() {
+    await _show(chrome.storage.session)
+    await _show(chrome.storage.sync)
+    await _show(chrome.storage.local)
+}
+
+async function _show(storage) {
+    return storage.get(null, (data) => {
+        console.log(storage, data)
+    })
+}
+
+function storeInSync(key, value) {
+    _store(chrome.storage.sync, key, value)
+}
+
+function storeInSession(key, value) {
+    _store(chrome.storage.session, key, value)
+}
+
+function _store(storage, key, value) {
     console.log(`storing key=${key} value=${value}`)
-    chrome.storage.local.set({ "textInput": textInput.value }, () => {
+    storage.set({ [key]: textInput.value }, () => {
         if (chrome.runtime.lastError) {
             console.error("data saving error:", chrome.runtime.lastError)
         }
@@ -15,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const textInput = document.getElementById("textInput")
     const addButton = document.getElementById("add")
 
-    chrome.storage.local.get(["textInput"], (result) => {
+    chrome.storage.session.get(["textInput"], (result) => {
         console.log("data in the storage:", result)
         if (result.textInput) {
             console.log("restoring data in the textInput")
@@ -26,20 +52,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
     textInput.addEventListener("input", () => {
         console.log("input: ", "'" + textInput.value + "'")
-        store("textInput", textInput.value)
+        storeInSession("textInput", textInput.value)
         setAddButtonState()
     })
 
     addButton.addEventListener("click", () => {
-        console.log("add button clicked")
-        // for now just clear the input text
+        const idea = textInput.value.trim()
+        if (idea.length === 0) {
+            console.warn("skipping writing an empty idea")
+            return
+        }
+
+        storeInSync("inbox", idea)
+
         clearInputText()
     })
 
     function clearInputText() {
         textInput.value = ""
         addButton.disabled = true
-        store("textInput", "")
+        storeInSession("textInput", "")
     }
 
     function setAddButtonState() {
