@@ -79,11 +79,11 @@ document.addEventListener("DOMContentLoaded", () => {
             const ideas = Array.isArray(result.inbox) ? result.inbox : []
             ideas.push(idea)
             storeInSync("inbox", ideas)
+
+            window.close()
         })
 
         clearInputText()
-
-        window.close()
     }
 
     function clearInputText() {
