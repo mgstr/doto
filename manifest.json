@@ -1,8 +1,8 @@
 {
     "manifest_version": 3,
     "name": "Doto",
-    "version": "2025.01.12",
-    "key": "jcglojmlacpdnpjalikknfjmfcoeofmc",
+    "version": "2025.01.13",
+    "key": "pgIwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQC2vZu6SHRf9qsX4UlrceYhRpheZpgWy8lA9dwJRQ6A6zZpAt4liwiggUC0M0JY9d3QFnmT6KnZcE9Q8w3kpD9WjIREtd1kQ9ZwJV8Zj+KSOVYCuyvQ0RjxVIVCA4z88ZNT3Sn7iXmDRqX4+8J5z8BByFingkdfHmO6qPMG/SoVdPUYjOkBU6UQaNxeEgALsPfLOhBEC4wt6ScqJ4WIDsMigg1t0dFhINHs41WgBp+S00pr7IyW33SJZP0TdyYBlpiNTKr/lrpdwhXot1TcRzRH9MLlQP4DupGHeRPDmZvS2kJHfJLVMkpCeGsf82PVbYKeYxya3ITGpqvI7jTy3al/AgMBAAESgAKy/gDJViTNO/e19O7M7ImYrye1f+lAgsPwjEaqa46Z1esy4uhazBlbnYlgU6IkQaOp7HF0H9eeEYCB7eddAwbZeiGSdtcxlWPgrQ5QoO4wZrRvZKelqtdXeWyUoMrOglm8uokUF8tQ5id/aJXbOD5stYM2Tz/x0e02FjkshdKAW/XaHxKPnBXDjHLYXlXMi2KHEyj8y/j8ZARQwcvkFr+70EOEfd+xP+NI+/HuXjQrvh3RkXD+XpF9LTYvZG/tFJEBwKXwI49qtBkGW0S/Ra40eII1xLnw1yX9WsixV46n7CAxtQr7wLjw1wkNFoIfMPHgc/YrFYysKTji0BkKG2PXgvEEEgoQ7MXjkGmOjT6/kaxiscAuBFBLAwQ=",
     "description": "Local first TODO organizer",
     "permissions": [
         "storage"
