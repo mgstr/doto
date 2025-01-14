@@ -34,6 +34,8 @@ body {
     flex: 1;
     text-align: center;
     transition: background-color 0.3s;
+    position: relative;
+    display: inline-block;
 }
 
 .tab:hover {
@@ -57,4 +59,16 @@ body {
 
 .content.active {
     display: flex;
+}
+
+.badge {
+    background-color: red;
+    color: white;
+    font-size: 1em;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 10px;
+    position: relative;
+    top: -3px;
+    margin-left: 5px;
 }
