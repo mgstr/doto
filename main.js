@@ -1,4 +1,6 @@
-document.addEventListener("DOMContentLoaded", () => {
+import { storage } from "./storage.js"
+
+document.addEventListener("DOMContentLoaded", async () => {
     const tabs = document.querySelectorAll('.tab')
     const contents = document.querySelectorAll('.content')
 
@@ -13,5 +15,12 @@ document.addEventListener("DOMContentLoaded", () => {
             const contentId = tab.getAttribute('data-content')
             document.getElementById(contentId).classList.add('active')
         })
+    })
+
+    // setup Inbox
+    const input = document.querySelector("#inbox #textInput")
+    input.value = await storage.load("input")
+    input.addEventListener('input', async (e) => {
+        await storage.save("input", e.target.value)
     })
 })
