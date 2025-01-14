@@ -19,7 +19,7 @@ chrome.action.onClicked.addListener(() => {
         );
 
         chrome.windows.create({
-            url: "add.html",
+            url: "main.html",
             type: "popup",
             width: width,
             height: height,

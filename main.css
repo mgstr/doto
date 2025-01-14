@@ -1,0 +1,60 @@
+body {
+    /* Also doubles the text size inside input fields */
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Style to make the input and button appear on the same line */
+.input-container {
+    display: flex;
+    align-items: center;
+}
+
+#textInput {
+    margin-right: 0.5em;
+    /* Optional: space between input and button */
+}
+
+#counter {
+    color: grey; /* Sets the text color to grey */
+    font-size: 0.5em; /* Reduces font size to half the normal size */
+    vertical-align: super; /* Positions the text as superscript */
+  }
+
+.tabs {
+    display: flex;
+    background-color: #f1f1f1;
+    border-bottom: 2px solid #ddd;
+}
+
+.tab {
+    padding: 15px 20px;
+    cursor: pointer;
+    flex: 1;
+    text-align: center;
+    transition: background-color 0.3s;
+}
+
+.tab:hover {
+    background-color: #e0e0e0;
+}
+
+.tab.active {
+    background-color: #0078D7;
+    color: white;
+    font-weight: bold;
+}
+
+.content {
+    padding: 20px;
+    display: none;
+    height: calc(100vh - 48px); /* Adjust for tab height */
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.content.active {
+    display: flex;
+}
