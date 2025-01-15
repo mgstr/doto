@@ -32,7 +32,14 @@ export const inbox = async (tab, content) => {
         setAddState(value)
         storage.save("input", value)
     })
-    add.addEventListener("click", async (e) => {
+    input.addEventListener("keydown", async (e) => {
+        console.log(e)
+        if (e.key === "Enter") {
+            add.click()
+        }
+    })
+
+    add.addEventListener("click", async (_e) => {
         const idea = input.value
         if (idea.length > 0) {
             const ideas = await getIdeas()
