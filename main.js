@@ -1,9 +1,10 @@
 import { storage } from "./storage.js"
 import { inbox } from "./pages/inbox.js"
+import { today } from "./pages/today.js"
+import { projects } from "./pages/projects.js"
+import { someday } from "./pages/someday.js"
 
-const pages = {
-    inbox
-}
+const pages = { inbox, today, projects, someday }
 
 document.addEventListener("DOMContentLoaded", async () => {
     const tabs = document.querySelectorAll(".tab")
