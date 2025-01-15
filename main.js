@@ -1,26 +1,31 @@
 import { storage } from "./storage.js"
+import { inbox } from "./pages/inbox.js"
+
+const pages = {
+    inbox
+}
 
 document.addEventListener("DOMContentLoaded", async () => {
-    const tabs = document.querySelectorAll('.tab')
-    const contents = document.querySelectorAll('.content')
+    const tabs = document.querySelectorAll(".tab")
+    const content = document.getElementById("content")
 
     tabs.forEach(tab => {
         tab.addEventListener('click', () => {
-            // Remove active class from all tabs and content
+            // Remove active class from all tabs
             tabs.forEach(t => t.classList.remove('active'))
-            contents.forEach(c => c.classList.remove('active'))
 
-            // Add active class to the clicked tab and corresponding content
+            // Add active class to the clicked tab
             tab.classList.add('active')
-            const contentId = tab.getAttribute('data-content')
-            document.getElementById(contentId).classList.add('active')
+
+            const pageId = tab.getAttribute('data-content')
+            const pageGenerator = pages[pageId]
+            if (pageGenerator) {
+                pageGenerator(tab, content)
+            } else {
+                content.innerHTML = "<h1>404</h1>"
+            }
         })
     })
 
-    // setup Inbox
-    const input = document.querySelector("#inbox #textInput")
-    input.value = await storage.load("input")
-    input.addEventListener('input', async (e) => {
-        await storage.save("input", e.target.value)
-    })
+    tabs[0].click()
 })
