@@ -1,4 +1,3 @@
-import { storage } from "./storage.js"
 import { inbox } from "./pages/inbox.js"
 import { today } from "./pages/today.js"
 import { projects } from "./pages/projects.js"
@@ -11,7 +10,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const content = document.getElementById("content")
 
     tabs.forEach(tab => {
-        tab.addEventListener('click', () => {
+        tab.addEventListener('click', async () => {
             // Remove active class from all tabs
             tabs.forEach(t => t.classList.remove('active'))
 
@@ -21,7 +20,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             const pageId = tab.getAttribute('data-content')
             const pageGenerator = pages[pageId]
             if (pageGenerator) {
-                pageGenerator(tab, content)
+                await pageGenerator(tab, content)
             } else {
                 content.innerHTML = "<h1>404</h1>"
             }
