@@ -1,7 +1,12 @@
 import { storage } from "../storage.js"
 
 export const inbox = async (tab, content) => {
-    const getIdeas = async () => (await storage.load("ideas")) ?? []
+    const getIdeas = async () => storage.load("ideas", [])
+    const setInputValue = (value) => {
+        input.value = value
+        setAddState(value)
+    }
+    const setAddState = (value) => add.disabled = value.lendth === 0
     const setBadgeCount = (count) => {
         const element = tab.querySelector("#badge")
         if (count === 0) {
@@ -19,15 +24,13 @@ export const inbox = async (tab, content) => {
     const input = content.querySelector("#textInput")
     const add = content.querySelector("#add")
 
-    const value = (await storage.load("input")) ?? ""
-    input.value = value
-    add.disabled = value.lendth === 0
+    setInputValue(await storage.load("input", ""))
     setBadgeCount((await getIdeas()).length)
 
     input.addEventListener("input", async (e) => {
         const value = e.target.value
-        add.disabled = value.length === 0
-        await storage.save("input", value)
+        setAddState(value)
+        storage.save("input", value)
     })
     add.addEventListener("click", async (e) => {
         const idea = input.value
@@ -37,8 +40,7 @@ export const inbox = async (tab, content) => {
             storage.save("ideas", ideas)
             setBadgeCount(ideas.length)
 
-            input.value = ""
-            add.disabled = true
+            setInputValue("")
             storage.save("input", "")
         }
     })
