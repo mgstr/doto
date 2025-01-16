@@ -1,7 +1,8 @@
 import { storage } from "../storage.js"
+import { data } from "../data.js"
 
 export const inbox = async (tab, content) => {
-    const getIdeas = async () => storage.load("ideas", [])
+    const getIdeas = async () => (await data.load()).ideas
     const setInputValue = (value) => {
         input.value = value
         setAddState(value)
@@ -16,6 +17,10 @@ export const inbox = async (tab, content) => {
             element.classList.add("badge")
             element.innerText = count
         }
+    }
+    const switchToReviewMode = () => {
+        console.log("switch to review mode")
+        tab.innerText = "Review Inbox"
     }
 
     content.innerHTML = `<input type="text" id="textInput" size="40" autofocus/>
@@ -33,19 +38,22 @@ export const inbox = async (tab, content) => {
         storage.save("input", value)
     })
     input.addEventListener("keydown", async (e) => {
-        console.log(e)
         if (e.key === "Enter") {
-            add.click()
+            if (e.shiftKey) {
+                switchToReviewMode()
+            } else {
+                add.click()
+            }
         }
     })
 
     add.addEventListener("click", async (_e) => {
         const idea = input.value
         if (idea.length > 0) {
-            const ideas = await getIdeas()
-            ideas.push(idea)
-            storage.save("ideas", ideas)
-            setBadgeCount(ideas.length)
+            const raw = await data.load()
+            raw.ideas.push(idea)
+            data.save(raw)
+            setBadgeCount(raw.ideas.length)
 
             setInputValue("")
             storage.save("input", "")
