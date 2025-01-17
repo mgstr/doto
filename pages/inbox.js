@@ -3,22 +3,11 @@ import { data } from "../data.js"
 
 export const inbox = {
     content: async (tab, content) => {
-        const getInbox = async () => (await data.load()).inbox
         const setInputValue = (value) => {
             input.value = value
             setAddState(value)
         }
         const setAddState = (value) => add.disabled = value.lendth === 0
-        const setBadgeCount = (count) => {
-            const element = tab.querySelector("#badge")
-            if (count === 0) {
-                element.classList.remove("badge")
-                element.innerText = ""
-            } else {
-                element.classList.add("badge")
-                element.innerText = count
-            }
-        }
         const switchToReviewMode = () => {
             console.log("switch to review mode")
             tab.innerText = "Review Inbox"
@@ -27,15 +16,10 @@ export const inbox = {
         content.innerHTML = `<input type="text" id="textInput" size="40"/>
         <button id="add" disabled>+</button>`
 
-        tab.querySelector("#buttons").innerHTML = `
-            <i class="fa-solid fa-eye"></i>
-        `
-
         const input = content.querySelector("#textInput")
         const add = content.querySelector("#add")
 
         setInputValue(await storage.load("input", ""))
-        setBadgeCount((await getInbox()).length)
         input.focus()
 
         input.addEventListener("input", async (e) => {
@@ -59,7 +43,6 @@ export const inbox = {
                 const raw = await data.load()
                 raw.inbox.push(idea)
                 data.save(raw)
-                setBadgeCount(raw.inbox.length)
 
                 setInputValue("")
                 storage.save("input", "")
@@ -68,6 +51,26 @@ export const inbox = {
     },
 
     tab: async (tab) => {
-        console.log("initialize tab")
+        const setBadgeCount = (count) => {
+            const element = tab.querySelector("#badge")
+            if (count === 0) {
+                element.classList.remove("badge")
+                element.innerText = ""
+            } else {
+                element.classList.add("badge")
+                element.innerText = count
+            }
+        }
+
+        tab.querySelector("#buttons").innerHTML = `
+            <i class="fa-solid fa-eye"></i>
+        `
+        data.load().then(raw => setBadgeCount(raw?.inbox?.length))
+
+        chrome.storage.onChanged.addListener((changes, areaName) => {
+            if (areaName === "local" && changes["doto"]) {
+                setBadgeCount(changes.doto.newValue?.inbox?.length)
+            }
+        })
     }
 }

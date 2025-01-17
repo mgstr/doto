@@ -32,8 +32,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         })
     })
 
-    console.log(tabsManager)
-
     tabs[0].click()
 })
 
