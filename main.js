@@ -24,6 +24,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         tab.addEventListener('click', async () => {
             // Remove active class from all tabs
             tabs.forEach(t => t.classList.remove('active'))
+            tabs.forEach(t => t.classList.remove('review'))
 
             // Add active class to the clicked tab
             tab.classList.add('active')

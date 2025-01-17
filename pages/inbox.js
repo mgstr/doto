@@ -8,9 +8,17 @@ export const inbox = {
             setAddState(value)
         }
         const setAddState = (value) => add.disabled = value.lendth === 0
-        const switchToReviewMode = () => {
-            console.log("switch to review mode")
-            tab.innerText = "Review Inbox"
+        const switchMode = () => {
+            console.log("switch mode")
+            if (tab.classList.contains("active")) {
+                console.log("switch to review")
+                tab.classList.remove("active")
+                tab.classList.add("review")
+            } else {
+                console.log("switch to adding")
+                tab.classList.remove("review")
+                tab.classList.add("active")
+            }
         }
 
         content.innerHTML = `<input type="text" id="textInput" size="40"/>
@@ -30,7 +38,7 @@ export const inbox = {
         input.addEventListener("keydown", async (e) => {
             if (e.key === "Enter") {
                 if (e.shiftKey) {
-                    switchToReviewMode()
+                    switchMode()
                 } else {
                     add.click()
                 }

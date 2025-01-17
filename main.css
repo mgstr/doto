@@ -48,6 +48,12 @@ body {
     font-weight: bold;
 }
 
+.tab.review {
+    background-color: #1dd700;
+    color: white;
+    font-weight: bold;
+}
+
 .content {
     padding: 20px;
     display: flex;
