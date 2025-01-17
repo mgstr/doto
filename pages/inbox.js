@@ -23,7 +23,7 @@ export const inbox = async (tab, content) => {
         tab.innerText = "Review Inbox"
     }
 
-    content.innerHTML = `<input type="text" id="textInput" size="40" autofocus/>
+    content.innerHTML = `<input type="text" id="textInput" size="40"/>
     <button id="add" disabled>+</button>`
 
     const input = content.querySelector("#textInput")
@@ -31,6 +31,7 @@ export const inbox = async (tab, content) => {
 
     setInputValue(await storage.load("input", ""))
     setBadgeCount((await getIdeas()).length)
+    input.focus()
 
     input.addEventListener("input", async (e) => {
         const value = e.target.value

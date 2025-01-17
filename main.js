@@ -10,7 +10,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     const content = document.getElementById("content")
 
     tabs.forEach(tab => {
-        tab.appendChild(document.createElement("span"))
+        const badge = document.createElement("span")
+        badge.id = "badge"
+        tab.insertBefore(badge, tab.firstChild)
+
+        const buttons = document.createElement("span")
+        buttons.id = "buttons"
+        tab.appendChild(buttons)
+
         tab.addEventListener('click', async () => {
             // Remove active class from all tabs
             tabs.forEach(t => t.classList.remove('active'))
