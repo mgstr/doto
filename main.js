@@ -45,4 +45,6 @@ function initializeTab(tab, pageObject) {
     const buttons = document.createElement("span")
     buttons.id = "buttons"
     tab.appendChild(buttons)
+
+    pageObject.tab(tab)
 }
