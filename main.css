@@ -74,10 +74,12 @@ body {
   }
 
   .tab.active .btn {
-    display: flex; /* Ensures the button is visible when the parent has the active class */
+    display: inline; /* Ensures the button is visible when the parent has the active class */
   }
 
 .btn {
+    font-size: 0.7em;
+    margin: none;
     border: none;
     background: none;
     cursor: pointer;
