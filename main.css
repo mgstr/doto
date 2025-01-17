@@ -32,7 +32,7 @@ body {
     padding: 15px 20px;
     cursor: pointer;
     flex: 1;
-    text-align: center;
+    text-align: left;
     transition: background-color 0.3s;
     position: relative;
     display: inline-block;
@@ -50,15 +50,11 @@ body {
 
 .content {
     padding: 20px;
-    display: none;
+    display: flex;
     height: calc(100vh - 48px); /* Adjust for tab height */
     justify-content: center;
     align-items: center;
     text-align: center;
-}
-
-.content.active {
-    display: flex;
 }
 
 .badge {
@@ -71,4 +67,18 @@ body {
     position: relative;
     top: -3px;
     margin-left: 5px;
+}
+
+.tab:not(.active) .btn {
+    display: none; /* Hides the button if the parent does not have the active class */
+  }
+
+  .tab.active .btn {
+    display: flex; /* Ensures the button is visible when the parent has the active class */
+  }
+
+.btn {
+    border: none;
+    background: none;
+    cursor: pointer;
 }

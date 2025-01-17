@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    <meta charset="UTF-8">
     <title>DoTo</title>
     <link rel="stylesheet" href="main.css">
     <script type="module" src="main.js" defer></script>
@@ -9,14 +10,14 @@
 
 <body>
     <div class="tabs">
-        <div class="tab active" data-content="inbox"><span class="review" id="review">Review </span>Inbox<span
-                id="badge"></span></div>
+        <div class="tab active" data-content="inbox"><span id="badge"></span> Inbox</div>
         <div class="tab" data-content="today">Today</div>
         <div class="tab" data-content="projects">Projects</div>
-        <div class="tab" data-content="debug">Debug</div>
+        <div class="tab" data-content="debug">Debug <button aria-label="close" class="btn">❌</button>
+        </div>
     </div>
 
-    <div id="content" class="content active">
+    <div id="content" class="content">
     </div>
 </body>
 
