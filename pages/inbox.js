@@ -2,7 +2,7 @@ import { storage } from "../storage.js"
 import { data } from "../data.js"
 
 export const inbox = async (tab, content) => {
-    const getIdeas = async () => (await data.load()).ideas
+    const getInbox = async () => (await data.load()).inbox
     const setInputValue = (value) => {
         input.value = value
         setAddState(value)
@@ -34,7 +34,7 @@ export const inbox = async (tab, content) => {
     const add = content.querySelector("#add")
 
     setInputValue(await storage.load("input", ""))
-    setBadgeCount((await getIdeas()).length)
+    setBadgeCount((await getInbox()).length)
     input.focus()
 
     input.addEventListener("input", async (e) => {
@@ -56,9 +56,9 @@ export const inbox = async (tab, content) => {
         const idea = input.value
         if (idea.length > 0) {
             const raw = await data.load()
-            raw.ideas.push(idea)
+            raw.inbox.push(idea)
             data.save(raw)
-            setBadgeCount(raw.ideas.length)
+            setBadgeCount(raw.inbox.length)
 
             setInputValue("")
             storage.save("input", "")
