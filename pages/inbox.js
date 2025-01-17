@@ -26,6 +26,10 @@ export const inbox = async (tab, content) => {
     content.innerHTML = `<input type="text" id="textInput" size="40"/>
     <button id="add" disabled>+</button>`
 
+    tab.querySelector("#buttons").innerHTML = `
+        <i class="fa-solid fa-eye"></i>
+    `
+
     const input = content.querySelector("#textInput")
     const add = content.querySelector("#add")
 

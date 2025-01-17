@@ -69,18 +69,10 @@ body {
     margin-left: 5px;
 }
 
-.tab:not(.active) .fa-solid {
+.tab:not(.active) #buttons .fa-solid {
     display: none; /* Hides the button if the parent does not have the active class */
-  }
+}
 
-  .tab.active .fa-solid {
+.tab.active #buttons .fa-solid {
     display: inline; /* Ensures the button is visible when the parent has the active class */
-  }
-
-.btn {
-    font-size: 0.7em;
-    margin: none;
-    border: none;
-    background: none;
-    cursor: pointer;
 }
