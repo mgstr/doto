@@ -1,5 +1,21 @@
 import { data } from "../data.js"
 
+// Convert JSON data to a blob and create a download link
+function downloadJSON(data, filename) {
+    const jsonString = JSON.stringify(data, null, 2); // Convert JSON object to a string
+    const blob = new Blob([jsonString], { type: "application/json" }); // Create a Blob object
+    const url = URL.createObjectURL(blob); // Create a URL for the Blob
+
+    // Create a temporary anchor element for the download
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = filename; // Set the file name
+    a.click(); // Trigger the download
+
+    // Clean up the URL object
+    URL.revokeObjectURL(url);
+}
+
 export const debug = async (tab, content) => {
     const raw = await data.load()
     const json = JSON.stringify(raw, null, 2)
@@ -16,6 +32,7 @@ export const debug = async (tab, content) => {
     })
 
     tab.querySelector(".fa-download").addEventListener("click", async (e) => {
-        console.log("download")
+        const raw = await data.load()
+        downloadJSON(raw, "raw.json")
     })
 }
