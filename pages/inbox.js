@@ -5,7 +5,10 @@ async function showReview(tab, content) {
     tab.classList.remove("active")
     tab.classList.add("review")
 
-    content.innerHTML = "let review inbox"
+    data.load().then(raw => {
+        content.innerHTML = `<div>${raw.inbox[0]}</div>
+        <div>delete</div>`
+    })
 }
 
 async function showAdding(tab, content) {
