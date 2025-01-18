@@ -6,8 +6,15 @@ async function showReview(tab, content) {
     tab.classList.add("review")
 
     data.load().then(raw => {
-        content.innerHTML = `<div>${raw.inbox[0]}</div>
-        <div>delete</div>`
+        content.innerHTML = `
+            <div class="container">
+                <div class="center-text">${raw.inbox[0]}</div>
+                <div class="actions">
+                    <div>delete</div>
+                    <div>project</div>
+                    <div>action</div>
+                </div>
+            </div>`
     })
 }
 
