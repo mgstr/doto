@@ -1,11 +1,6 @@
 import { storage } from "../storage.js"
 import { data } from "../data.js"
 
-const state = {
-    adding: true,
-    inboxNotesCount: 0
-}
-
 async function showReview(tab, content) {
     tab.classList.remove("active")
     tab.classList.add("review")
@@ -65,7 +60,7 @@ export const inbox = {
         showAdding(tab, content)
     },
 
-    tab: async (tab) => {
+    tab: async (tab, content) => {
         const setBadgeCount = (count) => {
             const element = tab.querySelector("#badge")
             if (count === 0) {
@@ -75,11 +70,14 @@ export const inbox = {
                 element.classList.add("badge")
                 element.innerText = count
             }
+            element.addEventListener("click", (e) => {
+                e.stopPropagation()
+                showReview(tab, content)
+            })
         }
 
-        tab.querySelector("#buttons").innerHTML = `
-            <i class="fa-solid fa-eye"></i>
-        `
+        tab.querySelector("#buttons").innerHTML = ``
+
         data.load().then(raw => setBadgeCount(raw?.inbox?.length))
 
         chrome.storage.onChanged.addListener((changes, areaName) => {

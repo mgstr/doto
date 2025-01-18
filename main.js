@@ -11,6 +11,18 @@ document.addEventListener("DOMContentLoaded", async () => {
     const tabsManager = {}
 
     tabs.forEach(tab => {
+        function initializeTab() {
+            const badge = document.createElement("span")
+            badge.id = "badge"
+            tab.insertBefore(badge, tab.firstChild)
+
+            const buttons = document.createElement("span")
+            buttons.id = "buttons"
+            tab.appendChild(buttons)
+
+            pageObject.tab(tab, content)
+        }
+
         const pageId = tab.getAttribute('data-content')
         const pageObject = pages[pageId]
         if (pageObject) {
@@ -19,7 +31,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             console.error(`Can't find a page object for ${pageId}`)
         }
 
-        initializeTab(tab, pageObject)
+        initializeTab()
 
         tab.addEventListener('click', async () => {
             // Remove active class from all tabs
@@ -35,15 +47,3 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     tabs[0].click()
 })
-
-function initializeTab(tab, pageObject) {
-    const badge = document.createElement("span")
-    badge.id = "badge"
-    tab.insertBefore(badge, tab.firstChild)
-
-    const buttons = document.createElement("span")
-    buttons.id = "buttons"
-    tab.appendChild(buttons)
-
-    pageObject.tab(tab)
-}
