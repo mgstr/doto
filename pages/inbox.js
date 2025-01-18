@@ -1,61 +1,68 @@
 import { storage } from "../storage.js"
 import { data } from "../data.js"
 
+const state = {
+    adding: true,
+    inboxNotesCount: 0
+}
+
+async function showReview(tab, content) {
+    tab.classList.remove("active")
+    tab.classList.add("review")
+
+    content.innerHTML = "let review inbox"
+}
+
+async function showAdding(tab, content) {
+    tab.classList.remove("review")
+    tab.classList.add("active")
+
+    const setInputValue = (value) => {
+        input.value = value
+        setAddState(value)
+    }
+    const setAddState = (value) => add.disabled = value.lendth === 0
+
+    content.innerHTML = `<input type="text" id="textInput" size="40"/>
+    <button id="add" disabled>+</button>`
+
+    const input = content.querySelector("#textInput")
+    const add = content.querySelector("#add")
+
+    setInputValue(await storage.load("input", ""))
+    input.focus()
+
+    input.addEventListener("input", async (e) => {
+        const value = e.target.value
+        setAddState(value)
+        storage.save("input", value)
+    })
+    input.addEventListener("keydown", async (e) => {
+        if (e.key === "Enter") {
+            if (e.shiftKey) {
+                showReview(tab, content)
+            } else {
+                add.click()
+            }
+        }
+    })
+
+    add.addEventListener("click", async (_e) => {
+        const idea = input.value
+        if (idea.length > 0) {
+            const raw = await data.load()
+            raw.inbox.push(idea)
+            data.save(raw)
+
+            setInputValue("")
+            storage.save("input", "")
+        }
+    })
+}
+
 export const inbox = {
     content: async (tab, content) => {
-        const setInputValue = (value) => {
-            input.value = value
-            setAddState(value)
-        }
-        const setAddState = (value) => add.disabled = value.lendth === 0
-        const switchMode = () => {
-            console.log("switch mode")
-            if (tab.classList.contains("active")) {
-                console.log("switch to review")
-                tab.classList.remove("active")
-                tab.classList.add("review")
-            } else {
-                console.log("switch to adding")
-                tab.classList.remove("review")
-                tab.classList.add("active")
-            }
-        }
-
-        content.innerHTML = `<input type="text" id="textInput" size="40"/>
-        <button id="add" disabled>+</button>`
-
-        const input = content.querySelector("#textInput")
-        const add = content.querySelector("#add")
-
-        setInputValue(await storage.load("input", ""))
-        input.focus()
-
-        input.addEventListener("input", async (e) => {
-            const value = e.target.value
-            setAddState(value)
-            storage.save("input", value)
-        })
-        input.addEventListener("keydown", async (e) => {
-            if (e.key === "Enter") {
-                if (e.shiftKey) {
-                    switchMode()
-                } else {
-                    add.click()
-                }
-            }
-        })
-
-        add.addEventListener("click", async (_e) => {
-            const idea = input.value
-            if (idea.length > 0) {
-                const raw = await data.load()
-                raw.inbox.push(idea)
-                data.save(raw)
-
-                setInputValue("")
-                storage.save("input", "")
-            }
-        })
+        showAdding(tab, content)
     },
 
     tab: async (tab) => {
