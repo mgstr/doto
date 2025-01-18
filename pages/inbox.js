@@ -10,11 +10,20 @@ async function showReview(tab, content) {
             <div class="container">
                 <div class="center-text">${raw.inbox[0]}</div>
                 <div class="actions">
-                    <div>delete</div>
+                    <div id="delete">delete</div>
                     <div>project</div>
                     <div>action</div>
                 </div>
             </div>`
+        content.querySelector("#delete").addEventListener("click", (e) => {
+            data.load().then(raw => {
+                raw.inbox.shift()
+                data.save(raw)
+                setTimeout(() => {
+                    raw.inbox.length === 0 ? showAdding(tab, content) : showReview(tab, content)
+                })
+            })
+        })
     })
 }
 
