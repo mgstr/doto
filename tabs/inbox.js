@@ -111,11 +111,3 @@ export class Inbox extends Tab {
         }
     }
 }
-
-/*
-async function showReview(tab, content) {
-    tab.classList.remove("active")
-    tab.classList.add("review")
-
-}
-*/
