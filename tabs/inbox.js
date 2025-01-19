@@ -49,6 +49,7 @@ export class Inbox extends Tab {
             const value = e.target.value
             setAddState(value)
             storage.save("input", value)
+            input.focus()
         })
         input.addEventListener("keydown", async (e) => {
             if (e.key === "Enter") {
@@ -77,7 +78,26 @@ export class Inbox extends Tab {
         this.header.classList.remove("active")
         this.header.classList.add("review")
 
-        this.content.innerHTML = "<h1>let's review inbox</h1>"
+        data.load().then(raw => {
+            this.content.innerHTML = `
+                <div class="container">
+                    <div class="center-text">${raw.inbox[0]}</div>
+                    <div class="actions">
+                        <div id="delete">delete</div>
+                        <div>project</div>
+                        <div>action</div>
+                    </div>
+                </div>`
+            this.content.querySelector("#delete").addEventListener("click", (e) => {
+                data.load().then(raw => {
+                    raw.inbox.shift()
+                    data.save(raw)
+                    setTimeout(() => {
+                        raw.inbox.length === 0 ? this.addingMode() : this.reviewMode()
+                    })
+                })
+            })
+        })
     }
 
     setBadgeCount(count) {
@@ -97,25 +117,5 @@ async function showReview(tab, content) {
     tab.classList.remove("active")
     tab.classList.add("review")
 
-    data.load().then(raw => {
-        content.innerHTML = `
-            <div class="container">
-                <div class="center-text">${raw.inbox[0]}</div>
-                <div class="actions">
-                    <div id="delete">delete</div>
-                    <div>project</div>
-                    <div>action</div>
-                </div>
-            </div>`
-        content.querySelector("#delete").addEventListener("click", (e) => {
-            data.load().then(raw => {
-                raw.inbox.shift()
-                data.save(raw)
-                setTimeout(() => {
-                    raw.inbox.length === 0 ? showAdding(tab, content) : showReview(tab, content)
-                })
-            })
-        })
-    })
 }
 */
