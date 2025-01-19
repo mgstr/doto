@@ -5,11 +5,84 @@ import { Tab } from "./tab.js"
 export class Inbox extends Tab {
     constructor(tabs, content) {
         super("Inbox", tabs, content)
+
+        const badge = this.header.querySelector("#badge")
+        badge.addEventListener("click", (e) => {
+            e.stopPropagation()
+            this.reviewMode()
+        })
+        data.load().then(raw => this.setBadgeCount(raw?.inbox?.length))
+
+        chrome.storage.onChanged.addListener((changes, areaName) => {
+            if (areaName === "local" && changes["doto"]) {
+                console.log(changes)
+                this.setBadgeCount(changes.doto.newValue?.inbox?.length)
+            }
+        })
     }
 
-    activate() {
+    async activate() {
         super.activate()
-        this.content.innerHTML = "<h1>Inbox</h1>"
+
+        this.addingMode()
+    }
+
+    async addingMode() {
+        this.content.innerHTML = `<input type="text" id="textInput" size="40"/>
+            <button id="add" disabled>+</button>`
+
+        const input = content.querySelector("#textInput")
+        const add = content.querySelector("#add")
+        const setAddState = (value) => add.disabled = value.lendth === 0
+        const setInputValue = (value) => {
+            input.value = value
+            setAddState(value)
+        }
+
+        setInputValue(await storage.load("input", ""))
+        input.focus()
+
+        input.addEventListener("input", async (e) => {
+            const value = e.target.value
+            setAddState(value)
+            storage.save("input", value)
+        })
+        input.addEventListener("keydown", async (e) => {
+            if (e.key === "Enter") {
+                if (e.shiftKey) {
+                    this.reviewMode()
+                } else {
+                    add.click()
+                }
+            }
+        })
+
+        add.addEventListener("click", async (_e) => {
+            const idea = input.value
+            if (idea.length > 0) {
+                const raw = await data.load()
+                raw.inbox.push(idea)
+                data.save(raw)
+
+                setInputValue("")
+                storage.save("input", "")
+            }
+        })
+    }
+
+    async reviewMode() {
+        console.log("switch into review mode")
+    }
+
+    setBadgeCount(count) {
+        const element = this.header.querySelector("#badge")
+        if (count === undefined || count === 0) {
+            element.classList.remove("badge")
+            element.innerText = ""
+        } else {
+            element.classList.add("badge")
+            element.innerText = count
+        }
     }
 }
 
@@ -38,85 +111,5 @@ async function showReview(tab, content) {
             })
         })
     })
-}
-
-async function showAdding(tab, content) {
-    tab.classList.remove("review")
-    tab.classList.add("active")
-
-    const setInputValue = (value) => {
-        input.value = value
-        setAddState(value)
-    }
-    const setAddState = (value) => add.disabled = value.lendth === 0
-
-    content.innerHTML = `<input type="text" id="textInput" size="40"/>
-    <button id="add" disabled>+</button>`
-
-    const input = content.querySelector("#textInput")
-    const add = content.querySelector("#add")
-
-    setInputValue(await storage.load("input", ""))
-    input.focus()
-
-    input.addEventListener("input", async (e) => {
-        const value = e.target.value
-        setAddState(value)
-        storage.save("input", value)
-    })
-    input.addEventListener("keydown", async (e) => {
-        if (e.key === "Enter") {
-            if (e.shiftKey) {
-                showReview(tab, content)
-            } else {
-                add.click()
-            }
-        }
-    })
-
-    add.addEventListener("click", async (_e) => {
-        const idea = input.value
-        if (idea.length > 0) {
-            const raw = await data.load()
-            raw.inbox.push(idea)
-            data.save(raw)
-
-            setInputValue("")
-            storage.save("input", "")
-        }
-    })
-}
-
-export const inbox = {
-    content: async (tab, content) => {
-        showAdding(tab, content)
-    },
-
-    tab: async (tab, content) => {
-        const setBadgeCount = (count) => {
-            const element = tab.querySelector("#badge")
-            if (count === 0) {
-                element.classList.remove("badge")
-                element.innerText = ""
-            } else {
-                element.classList.add("badge")
-                element.innerText = count
-            }
-            element.addEventListener("click", (e) => {
-                e.stopPropagation()
-                showReview(tab, content)
-            })
-        }
-
-        tab.querySelector("#buttons").innerHTML = ``
-
-        data.load().then(raw => setBadgeCount(raw?.inbox?.length))
-
-        chrome.storage.onChanged.addListener((changes, areaName) => {
-            if (areaName === "local" && changes["doto"]) {
-                setBadgeCount(changes.doto.newValue?.inbox?.length)
-            }
-        })
-    }
 }
 */
