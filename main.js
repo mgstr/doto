@@ -1,20 +1,30 @@
-import { inbox } from "./pages/inbox.js"
-import { projects } from "./pages/projects.js"
-import { debug } from "./pages/debug.js"
-
-const pages = { inbox, projects, debug }
+import { tabsManager } from "./tabsManager.js"
+//import { inbox } from "./tabs/inbox.js"
+//import { projects } from "./tabs/projects.js"
+//import { debug } from "./tabs/debug.js"
 
 document.addEventListener("DOMContentLoaded", async () => {
-    const tabs = document.querySelectorAll(".tab")
+    const tabs = document.querySelector(".tabs")
     const content = document.getElementById("content")
 
-    const tabsManager = {}
+    tabsManager.init(tabs, content)
 
+    tabs.addEventListener("click", (e) => {
+        tabsManager.switchTo(e)
+    })
+
+})
+/*
+    const template = document.createElement("template")
+    for (const pageObject in [inbox, projects, debug]) {
+        template.innerHTML = `<div class="tab"><span id="badge"></span> ${pageObject.title}</div>`
+        const tab = document.createElement("div")
+        const badge = document.createElement("span")
+        badge.id = "badge"
+        tab.insertBefore(badge, tab.firstChild)
+    }
     tabs.forEach(tab => {
         function initializeTab() {
-            const badge = document.createElement("span")
-            badge.id = "badge"
-            tab.insertBefore(badge, tab.firstChild)
 
             const buttons = document.createElement("span")
             buttons.id = "buttons"
@@ -46,4 +56,4 @@ document.addEventListener("DOMContentLoaded", async () => {
     })
 
     tabs[0].click()
-})
+*/
