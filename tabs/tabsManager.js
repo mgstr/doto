@@ -1,7 +1,6 @@
 import { Debug } from "./debug.js"
 import { Projects } from "./projects.js"
-
-//import { inbox } from "./tabs/inbox.js"
+import { Inbox } from "./inbox.js"
 
 
 class TabsManager {
@@ -10,8 +9,9 @@ class TabsManager {
     }
 
     init(tabs, content) {
-        this.add(new Debug(tabs, content))
+        this.add(new Inbox(tabs, content))
         this.add(new Projects(tabs, content))
+        this.add(new Debug(tabs, content))
 
         this.activateFirstTab()
     }

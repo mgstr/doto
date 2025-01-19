@@ -1,6 +1,19 @@
 import { storage } from "../storage.js"
 import { data } from "../data.js"
+import { Tab } from "./tab.js"
 
+export class Inbox extends Tab {
+    constructor(tabs, content) {
+        super("Inbox", tabs, content)
+    }
+
+    activate() {
+        super.activate()
+        this.content.innerHTML = "<h1>Inbox</h1>"
+    }
+}
+
+/*
 async function showReview(tab, content) {
     tab.classList.remove("active")
     tab.classList.add("review")
@@ -106,3 +119,4 @@ export const inbox = {
         })
     }
 }
+*/
