@@ -28,6 +28,9 @@ export class Inbox extends Tab {
     }
 
     async addingMode() {
+        this.header.classList.remove("review")
+        this.header.classList.add("active")
+        
         this.content.innerHTML = `<input type="text" id="textInput" size="40"/>
             <button id="add" disabled>+</button>`
 
@@ -71,7 +74,10 @@ export class Inbox extends Tab {
     }
 
     async reviewMode() {
-        console.log("switch into review mode")
+        this.header.classList.remove("active")
+        this.header.classList.add("review")
+
+        this.content.innerHTML = "<h1>let's review inbox</h1>"
     }
 
     setBadgeCount(count) {

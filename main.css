@@ -72,7 +72,11 @@ body {
     border-radius: 10px;
     position: relative;
     top: -3px;
-    margin-left: 5px;
+    margin-right: 7px;
+}
+
+#buttons {
+    margin-left: 10px;
 }
 
 .tab:not(.active) #buttons .fa-solid {
