@@ -1,4 +1,8 @@
-import { Tab } from "./tabs/tab.js"
+import { Debug } from "./debug.js"
+import { Projects } from "./projects.js"
+
+//import { inbox } from "./tabs/inbox.js"
+
 
 class TabsManager {
     constructor() {
@@ -6,8 +10,8 @@ class TabsManager {
     }
 
     init(tabs, content) {
-        this.add(new Tab("404", tabs, content))
-        this.add(new Tab("500", tabs, content))
+        this.add(new Debug(tabs, content))
+        this.add(new Projects(tabs, content))
 
         this.activateFirstTab()
     }

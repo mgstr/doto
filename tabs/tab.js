@@ -1,6 +1,6 @@
 const initHeader = (name) => {
     const template = document.createElement("template")
-    template.innerHTML = `<div class="tab" id="${name}">${name}</div>`
+    template.innerHTML = `<div class="tab" id="${name}">${name} <span id="buttons"></span></div>`
     return template.content.firstChild
 }
 

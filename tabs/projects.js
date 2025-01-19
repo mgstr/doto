@@ -1,9 +1,12 @@
-export const projects = {
-    content: async (tab, content) => {
-        content.innerHTML = "<h1>Projects</h1>"
-    },
+import { Tab } from "./tab.js"
 
-    tab: async (tab) => {
-        console.log("initialize tab")
+export class Projects extends Tab {
+    constructor(tabs, content) {
+        super("Projects", tabs, content)
+    }
+
+    activate() {
+        super.activate()
+        this.content.innerHTML = `<h1>${this.id}</h1>`
     }
 }

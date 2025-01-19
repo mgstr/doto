@@ -1,7 +1,4 @@
-import { tabsManager } from "./tabsManager.js"
-//import { inbox } from "./tabs/inbox.js"
-//import { projects } from "./tabs/projects.js"
-//import { debug } from "./tabs/debug.js"
+import { tabsManager } from "./tabs/tabsManager.js"
 
 document.addEventListener("DOMContentLoaded", async () => {
     const tabs = document.querySelector(".tabs")
