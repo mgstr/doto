@@ -4,12 +4,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     const tabs = document.querySelector(".tabs")
     const content = document.getElementById("content")
 
-    tabsManager.init(tabs, content)
+    await tabsManager.init(tabs, content)
 
     tabs.addEventListener("click", (e) => {
         tabsManager.switchTo(e)
     })
-
 })
 /*
     const template = document.createElement("template")

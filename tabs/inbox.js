@@ -1,5 +1,5 @@
 import { storage } from "../storage.js"
-import { data } from "../data.js"
+import { todo } from "../data.js"
 import { Tab } from "./tab.js"
 
 export class Inbox extends Tab {
@@ -11,11 +11,11 @@ export class Inbox extends Tab {
             e.stopPropagation()
             this.reviewMode()
         })
-        data.load().then(raw => this.setBadgeCount(raw?.inbox?.length))
+        console.log("todo", todo, todo.raw)
+        this.setBadgeCount(todo.raw?.inbox?.length)
 
         chrome.storage.onChanged.addListener((changes, areaName) => {
             if (areaName === "local" && changes["doto"]) {
-                console.log(changes)
                 this.setBadgeCount(changes.doto.newValue?.inbox?.length)
             }
         })
@@ -30,7 +30,7 @@ export class Inbox extends Tab {
     async addingMode() {
         this.header.classList.remove("review")
         this.header.classList.add("active")
-        
+
         this.content.innerHTML = `<input type="text" id="textInput" size="40"/>
             <button id="add" disabled>+</button>`
 
@@ -64,9 +64,7 @@ export class Inbox extends Tab {
         add.addEventListener("click", async (_e) => {
             const idea = input.value
             if (idea.length > 0) {
-                const raw = await data.load()
-                raw.inbox.push(idea)
-                data.save(raw)
+                todo.addToInbox(idea)
 
                 setInputValue("")
                 storage.save("input", "")
@@ -78,37 +76,32 @@ export class Inbox extends Tab {
         this.header.classList.remove("active")
         this.header.classList.add("review")
 
-        data.load().then(raw => {
+        const idea = todo.getOldestInboxIdea()
+        this.content.innerHTML = `
+            <div class="container">
+                <div class="center-text" id="idea">${idea}</div>
+                <div class="actions">
+                    <div id="delete">delete</div>
+                    <div id="project">create project</div>
+                    <div>action</div>
+                </div>
+            </div>`
+        this.content.querySelector("#delete").addEventListener("click", (e) => {
+            todo.deleteInboxIdea(idea)
+            setTimeout(() => {
+                todo.raw.inbox.length === 0 ? this.addingMode() : this.reviewMode()
+            })
+        })
+        this.content.querySelector("#project").addEventListener("click", (e) => {
             this.content.innerHTML = `
                 <div class="container">
-                    <div class="center-text" id="idea">${raw.inbox[0]}</div>
+                    <div>
+                    <input type="text" id="textInput" size="40" value="${idea}"></input>
+                    </div>
                     <div class="actions">
-                        <div id="delete">delete</div>
-                        <div id="project">create project</div>
-                        <div>action</div>
+                        <div>save</div>
                     </div>
                 </div>`
-            this.content.querySelector("#delete").addEventListener("click", (e) => {
-                data.load().then(raw => {
-                    raw.inbox.shift()
-                    data.save(raw)
-                    setTimeout(() => {
-                        raw.inbox.length === 0 ? this.addingMode() : this.reviewMode()
-                    })
-                })
-            })
-            this.content.querySelector("#project").addEventListener("click", (e) => {
-                const idea = this.content.querySelector("#idea").innerText
-                this.content.innerHTML = `
-                    <div class="container">
-                        <div>
-                        <input type="text" id="textInput" size="40" value="${idea}"></input>
-                        </div>
-                        <div class="actions">
-                            <div>save</div>
-                        </div>
-                    </div>`
-            })
         })
     }
 

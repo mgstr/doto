@@ -1,6 +1,6 @@
 import { storage } from "./storage.js"
 
-export const data = {
+const data = {
     load: async () => {
         return storage.load("doto", { inbox: [] })
     },
@@ -8,3 +8,28 @@ export const data = {
         storage.save("doto", raw)
     }
 }
+
+class ToDoModel {
+    #raw
+
+    constructor() {}
+
+    async init() {
+        this.#raw = await data.load()
+        console.log("todo loaded", this.#raw)
+    }
+
+    get raw() { return this.#raw }
+    async clear() { await chrome.storage.local.clear() }
+    async addToInbox(idea) {
+        this.#raw.inbox.push(idea)
+        data.save(this.#raw)
+    }
+    getOldestInboxIdea() { return this.#raw.inbox[0] }
+    deleteInboxIdea(idea) {
+        this.#raw.inbox = this.#raw.inbox.filter(i => i !== idea)
+        data.save(this.#raw)
+    }
+}
+
+export const todo = new ToDoModel()

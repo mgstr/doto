@@ -1,4 +1,4 @@
-import { data } from "../data.js"
+import { todo } from "../data.js"
 import { Tab } from "./tab.js"
 
 // Convert JSON data to a blob and create a download link
@@ -28,14 +28,13 @@ export class Debug extends Tab {
 
         this.header.querySelector(".fa-trash").addEventListener("click", async (e) => {
             e.stopPropagation()
-            await chrome.storage.local.clear()
+            todo.clear()
             this.header.click()
         })
 
         this.header.querySelector(".fa-download").addEventListener("click", async (e) => {
             e.stopPropagation()
-            const raw = await data.load()
-            downloadJSON(raw, "raw.json")
+            downloadJSON(todo.raw, "raw.json")
         })
     }
 
@@ -45,8 +44,7 @@ export class Debug extends Tab {
     }
 
     async show() {
-        const raw = await data.load()
-        const json = JSON.stringify(raw, null, 2)
+        const json = JSON.stringify(todo.raw, null, 2)
         content.innerHTML = `<pre style="text-align: left;">${json}</pre>`
     }
 }

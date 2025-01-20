@@ -12,15 +12,15 @@ export class Tab {
         tabs.appendChild(this.header)
     }
 
-    show() {
+    async show() {
         this.content.innerHTML = "<div>404</div>"
     }
 
-    activate() {
+    async activate() {
         this.header.classList.add("active")
     }
 
-    deactivate() {
+    async deactivate() {
         this.header.classList.remove("active")
         this.header.classList.remove("review")
     }
