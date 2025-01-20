@@ -73,10 +73,14 @@ export class Inbox extends Tab {
     }
 
     async reviewMode() {
+        const idea = todo.getOldestInboxIdea()
+        if (!idea) {
+            return this.addingMode()
+        }
+
         this.header.classList.remove("active")
         this.header.classList.add("review")
 
-        const idea = todo.getOldestInboxIdea()
         this.content.innerHTML = `
             <div class="container">
                 <div class="center-text" id="idea">${idea}</div>
@@ -88,9 +92,7 @@ export class Inbox extends Tab {
             </div>`
         this.content.querySelector("#delete").addEventListener("click", (e) => {
             todo.deleteInboxIdea(idea)
-            setTimeout(() => {
-                todo.raw.inbox.length === 0 ? this.addingMode() : this.reviewMode()
-            })
+            this.reviewMode()
         })
         this.content.querySelector("#project").addEventListener("click", (e) => {
             this.content.innerHTML = `
