@@ -2,7 +2,7 @@ import { storage } from "./storage.js"
 
 const data = {
     load: async () => {
-        return storage.load("doto", { inbox: [] })
+        return storage.load("doto", { inbox: [], projects: [] })
     },
     save: async (raw) => {
         storage.save("doto", raw)
@@ -12,11 +12,10 @@ const data = {
 class ToDoModel {
     #raw
 
-    constructor() {}
+    constructor() { }
 
     async init() {
         this.#raw = await data.load()
-        console.log("todo loaded", this.#raw)
     }
 
     get raw() { return this.#raw }
@@ -28,6 +27,10 @@ class ToDoModel {
     getOldestInboxIdea() { return this.#raw.inbox[0] }
     deleteInboxIdea(idea) {
         this.#raw.inbox = this.#raw.inbox.filter(i => i !== idea)
+        data.save(this.#raw)
+    }
+    addProject(project) {
+        this.#raw.projects.push(project)
         data.save(this.#raw)
     }
 }

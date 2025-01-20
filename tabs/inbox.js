@@ -11,7 +11,6 @@ export class Inbox extends Tab {
             e.stopPropagation()
             this.reviewMode()
         })
-        console.log("todo", todo, todo.raw)
         this.setBadgeCount(todo.raw?.inbox?.length)
 
         chrome.storage.onChanged.addListener((changes, areaName) => {
@@ -97,13 +96,46 @@ export class Inbox extends Tab {
         this.content.querySelector("#project").addEventListener("click", (e) => {
             this.content.innerHTML = `
                 <div class="container">
-                    <div>
-                    <input type="text" id="textInput" size="40" value="${idea}"></input>
+                    <div class="center-text" id="idea">${idea}</div>
+                    <div><span>Name:</span><input type="text" id="name" size="40" value="${idea}"></input></div>
+                    <div><span>DOD:</span><input type="text" id="dod" size="40"></input></div>
+                    <div id="steps">
+                        <div>
+                        <input type="text" class="step" size="40"></input>
+                        <button type="button" class="add-step">+</button>
+                        </div>
                     </div>
                     <div class="actions">
-                        <div>save</div>
+                        <div id="create">create</div>
                     </div>
                 </div>`
+
+            const steps = this.content.querySelector("#steps")
+            steps.addEventListener("click", (e) => {
+                if (e.target.classList.contains('add-step')) {
+                    const newRow = document.createElement("div")
+                    newRow.innerHTML = `<div>
+                    <input type="text" class="step" size="40"></input>
+                    <button type="button" class="add-step">+</button>
+                    </div>`
+                    steps.appendChild(newRow)
+                }
+            })
+
+            this.content.querySelector("#create").addEventListener("click", (e) => {
+                const project = {
+                    name: this.content.querySelector("#name").value,
+                    dod: this.content.querySelector("#dod").value,
+                    steps: Array.from(this.content.querySelectorAll(".step"))
+                        .filter(step => step.value)
+                        .map(step => step.value)
+                }
+                console.log("create", project)
+                todo.addProject(project)
+
+                todo.deleteInboxIdea(idea)
+                this.reviewMode()               
+            })
         })
     }
 
