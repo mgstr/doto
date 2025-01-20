@@ -81,10 +81,10 @@ export class Inbox extends Tab {
         data.load().then(raw => {
             this.content.innerHTML = `
                 <div class="container">
-                    <div class="center-text">${raw.inbox[0]}</div>
+                    <div class="center-text" id="idea">${raw.inbox[0]}</div>
                     <div class="actions">
                         <div id="delete">delete</div>
-                        <div>project</div>
+                        <div id="project">create project</div>
                         <div>action</div>
                     </div>
                 </div>`
@@ -96,6 +96,18 @@ export class Inbox extends Tab {
                         raw.inbox.length === 0 ? this.addingMode() : this.reviewMode()
                     })
                 })
+            })
+            this.content.querySelector("#project").addEventListener("click", (e) => {
+                const idea = this.content.querySelector("#idea").innerText
+                this.content.innerHTML = `
+                    <div class="container">
+                        <div>
+                        <input type="text" id="textInput" size="40" value="${idea}"></input>
+                        </div>
+                        <div class="actions">
+                            <div>save</div>
+                        </div>
+                    </div>`
             })
         })
     }
