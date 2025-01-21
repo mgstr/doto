@@ -119,3 +119,8 @@ body {
     border-radius: 5px; /* Rounded corners */
     cursor: pointer; /* Optional cursor */
 }
+
+.projects-root {
+    display: flex;
+    flex-direction: column;
+}
