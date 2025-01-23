@@ -11,12 +11,12 @@ export class Actions extends Tab {
 
         const rows = todo.raw.projects
             .filter(project => project.steps[0])
-            .map(project => `<tr>
-                <td class="action-name">${project.steps[0]}</td>
-                <td class="action-project">${project.name}</td>
-                </tr>`)
+            .map(project => `<div>
+                <span class="action-name">${project.steps[0]}</span>
+                <span class="action-project">${project.name}</span>
+                </div>`)
             .join("")
 
-        this.content.innerHTML = `<table>${rows}</table>`
+        this.content.innerHTML = rows
     }
 }
