@@ -1,17 +1,18 @@
-const initHeader = (name) => {
+const initHeader = (id, name) => {
     const template = document.createElement("template")
-    template.innerHTML = `<div class="tab" id="${name}"><span id="badge"></span>${name}<span id="buttons"></span></div>`
+    template.innerHTML = `<div class="tab" id="${id}"><span id="badge"></span>${name}<span id="buttons"></span></div>`
     return template.content.firstChild
 }
 
 export class Tab {
     constructor(name) {
-        this.id = name
+        this.name = name
+        this.id = name.toLowerCase().replace(" ", "_")
     }
 
     init(tabs, content) {
         this.content = content
-        this.header = initHeader(this.id)
+        this.header = initHeader(this.id, this.name)
         tabs.appendChild(this.header)
     }
 
