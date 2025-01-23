@@ -129,3 +129,11 @@ body {
     font-style: italic;
     font-size: larger;
 }
+
+.action-name {
+    font-size: xx-large;
+}
+
+.action-project {
+    color: grey;
+}
