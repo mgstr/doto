@@ -5,10 +5,13 @@ const initHeader = (name) => {
 }
 
 export class Tab {
-    constructor(name, tabs, content) {
+    constructor(name) {
         this.id = name
+    }
+
+    init(tabs, content) {
         this.content = content
-        this.header = initHeader(name)
+        this.header = initHeader(this.id)
         tabs.appendChild(this.header)
     }
 

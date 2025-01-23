@@ -10,19 +10,17 @@ class TabsManager {
         this.tabs = []
     }
 
-    async init(tabs, content) {
+    async init(tabsContainer, content) {
         await todo.init()
 
-        this.add(new Inbox(tabs, content))
-        this.add(new Actions(tabs, content))
-        this.add(new Projects(tabs, content))
-        this.add(new Debug(tabs, content))
+        this.tabs.push(new Inbox())
+        this.tabs.push(new Actions())
+        this.tabs.push(new Projects())
+        this.tabs.push(new Debug())
+
+        this.tabs.forEach(tab => tab.init(tabsContainer, content))
 
         this.activateFirstTab()
-    }
-
-    add(tab) {
-        this.tabs.push(tab)
     }
 
     switchTo(element) {

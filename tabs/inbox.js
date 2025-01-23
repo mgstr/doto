@@ -3,8 +3,12 @@ import { todo } from "../data.js"
 import { Tab } from "./tab.js"
 
 export class Inbox extends Tab {
-    constructor(tabs, content) {
-        super("Inbox", tabs, content)
+    constructor() {
+        super("Inbox")
+    }
+
+    init(tabs, content) {
+        super.init(tabs, content)
 
         const badge = this.header.querySelector("#badge")
         badge.addEventListener("click", (e) => {
@@ -134,7 +138,7 @@ export class Inbox extends Tab {
                 todo.addProject(project)
 
                 todo.deleteInboxIdea(idea)
-                this.reviewMode()               
+                this.reviewMode()
             })
         })
     }

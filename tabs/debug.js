@@ -19,7 +19,11 @@ function downloadJSON(data, filename) {
 
 export class Debug extends Tab {
     constructor(tabs, content) {
-        super("Debug", tabs, content)
+        super("Debug")
+    }
+
+    init(tabs, content) {
+        super.init(tabs, content)
 
         this.header.querySelector("#buttons").innerHTML = `
                 <i class="fa-solid fa-download"></i>

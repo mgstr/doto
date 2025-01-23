@@ -2,8 +2,8 @@ import { Tab } from "./tab.js"
 import { todo } from "../data.js"
 
 export class Projects extends Tab {
-    constructor(tabs, content) {
-        super("Projects", tabs, content)
+    constructor() {
+        super("Projects")
     }
 
     activate() {
