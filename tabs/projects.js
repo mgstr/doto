@@ -25,8 +25,8 @@ export class Projects extends Tab {
     editProject(name) {
         const project = todo.raw.projects.find(project => project.name === name)
         this.content.innerHTML = `<div class="projects-root">
-            <div>Name: <span class="editable">${project.name}</span></div>
-            <div>DOD: <span class="editable">${project.dod}</span></div>
+            <div class="project-name"><span class="editable">${project.name}</span></div>
+            <div class="project-dod"><span class="editable">${project.dod}</span></div>
             <div class="steps">
             </div>
         </div>
@@ -34,8 +34,7 @@ export class Projects extends Tab {
         const steps = this.content.querySelector(".steps")
         project.steps.forEach(step => {
             const stepNode = document.createElement("div")
-            stepNode.classList.add("step", "editable")
-            stepNode.innerText = step
+            stepNode.innerHTML = `<span class="editable">${step}</step>`
             steps.appendChild(stepNode)
         })
 

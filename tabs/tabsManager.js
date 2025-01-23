@@ -2,6 +2,7 @@ import { todo } from "../data.js"
 import { Debug } from "./debug.js"
 import { Projects } from "./projects.js"
 import { Inbox } from "./inbox.js"
+import { Actions } from "./actions.js"
 
 
 class TabsManager {
@@ -13,6 +14,7 @@ class TabsManager {
         await todo.init()
 
         this.add(new Inbox(tabs, content))
+        this.add(new Actions(tabs, content))
         this.add(new Projects(tabs, content))
         this.add(new Debug(tabs, content))
 

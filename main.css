@@ -123,4 +123,15 @@ body {
 .projects-root {
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
+}
+
+.project-name {
+    font-weight: bolder;
+    font-size: xx-large;
+}
+
+.project-dod {
+    font-style: italic;
+    font-size: larger;
 }
