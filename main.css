@@ -120,14 +120,10 @@ body {
     align-items: flex-start;
 }
 
-.project-name {
-    font-weight: bolder;
-    font-size: xx-large;
-}
-
-.project-dod {
+.dod {
     font-style: italic;
     font-size: larger;
+    color: lightblue;
 }
 
 .large {

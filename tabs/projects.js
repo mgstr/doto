@@ -8,25 +8,19 @@ export class Projects extends Tab {
 
     activate() {
         super.activate()
-        this.content.innerHTML = `<div class="projects"></div>`
 
-        const projects = this.content.firstChild
-        todo.raw.projects.forEach(project => {
-            const projectNode = document.createElement("div")
-            projectNode.classList.add("project")
-            projectNode.innerText = project.name
-            projectNode.addEventListener("click", (e) => {
-                this.editProject(project.name)
-            })
-            projects.appendChild(projectNode)
-        });
+        const projects = todo.raw.projects.map(project =>
+            `<div><span class="project large">${project.name}</span> <span class="action small">${project.steps[0]}</span></div>`
+        ).join("")
+        console.log(projects)
+        this.content.innerHTML = `<div class="projects">${projects}</div>`
     }
 
     editProject(name) {
         const project = todo.raw.projects.find(project => project.name === name)
         this.content.innerHTML = `<div class="projects-root">
-            <div class="project-name"><span class="editable">${project.name}</span></div>
-            <div class="project-dod"><span class="editable">${project.dod}</span></div>
+            <div class="project large"><span class="editable">${project.name}</span></div>
+            <div class="action small"><span class="editable">${project.dod}</span></div>
             <div class="steps">
             </div>
         </div>
