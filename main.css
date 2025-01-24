@@ -130,10 +130,18 @@ body {
     font-size: larger;
 }
 
-.action-name {
+.large {
     font-size: xx-large;
 }
 
-.action-project {
-    color: grey;
+.small {
+    font-size: small;
+}
+
+.action {
+    color: darkblue;
+}
+
+.project {
+    color: darkgreen;
 }

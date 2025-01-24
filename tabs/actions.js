@@ -12,8 +12,8 @@ export class Actions extends Tab {
         const rows = todo.raw.projects
             .filter(project => project.steps[0])
             .map(project => `<div>
-                <span class="action-name">${project.steps[0]}</span>
-                <span class="action-project">${project.name}</span>
+                <span class="action large">${project.steps[0]}</span>
+                <span class="project small">${project.name}</span>
                 </div>`)
             .join("")
 
