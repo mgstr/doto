@@ -12,26 +12,25 @@ export class Projects extends Tab {
         const projects = todo.raw.projects.map(project =>
             `<div><span class="project large">${project.name}</span> <span class="action small">${project.steps[0]}</span></div>`
         ).join("")
-        console.log(projects)
         this.content.innerHTML = `<div class="projects">${projects}</div>`
+
+        this.content.querySelectorAll("span.project")
+            .forEach(project => project.addEventListener("click", (event) => {
+                this.editProject(event.target.innerText)
+            }))
     }
 
     editProject(name) {
         const project = todo.raw.projects.find(project => project.name === name)
+        const steps = project.steps.map(step =>
+            `<div><span class="action editable">${step}</span></div`
+        ).join("")
         this.content.innerHTML = `<div class="projects-root">
             <div class="project large"><span class="editable">${project.name}</span></div>
-            <div class="action small"><span class="editable">${project.dod}</span></div>
-            <div class="steps">
-            </div>
+            <div class="dod"><span class="editable">${project.dod}</span></div>
+            <div class="steps">${steps}</div>
         </div>
         `
-        const steps = this.content.querySelector(".steps")
-        project.steps.forEach(step => {
-            const stepNode = document.createElement("div")
-            stepNode.innerHTML = `<span class="editable">${step}</step>`
-            steps.appendChild(stepNode)
-        })
-
         this.content.querySelector(".projects-root").addEventListener("dblclick", (event) => {
             const target = event.target;
 
