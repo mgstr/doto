@@ -16,10 +16,14 @@ class ToDoModel {
 
     async init() {
         this.#raw = await data.load()
+        console.log("todo.init", this.#raw)
     }
 
     get raw() { return this.#raw }
-    async clear() { await chrome.storage.local.clear() }
+    async clear() {
+        await chrome.storage.local.clear()
+        await this.init()
+    }
     async addToInbox(idea) {
         this.#raw.inbox.push(idea)
         data.save(this.#raw)
