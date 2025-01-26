@@ -97,17 +97,16 @@ body {
     align-items: center;
     height: 100px; /* Adjust height as needed */
     width: 100%;   /* Full width */
-    font-size: 1.5rem; /* Optional font size */
 }
 
 /* Style the remaining divs to display inline */
-.actions {
+.menus {
     display: flex;
     gap: 10px; /* Space between the divs */
     margin-top: 10px; /* Optional spacing above */
 }
 
-.actions div {
+.menus div {
     padding: 10px 20px;
     background-color: lightblue; /* Optional background */
     border-radius: 5px; /* Rounded corners */

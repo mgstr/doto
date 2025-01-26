@@ -85,9 +85,9 @@ export class Inbox extends Tab {
         this.header.classList.add("review")
 
         this.content.innerHTML = `
-            <div class="container">
+            <div class="container centered-text">
                 <div class="center-text" id="idea">${idea}</div>
-                <div class="actions">
+                <div class="menus">
                     <div id="delete">delete</div>
                     <div id="project">create project</div>
                     <div>action</div>
@@ -109,7 +109,7 @@ export class Inbox extends Tab {
                         <button type="button" class="add-step">+</button>
                         </div>
                     </div>
-                    <div class="actions">
+                    <div class="menus">
                         <div id="create">create</div>
                     </div>
                 </div>`
