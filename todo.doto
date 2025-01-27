@@ -1,0 +1,13 @@
+MVP
+  add IDs to the inbox
+    each item inside storage could be unique identified for reference
+  add Done for edit project page
+    Projects marked as done are ready for archivements
+  mark any project action as Next action
+    project Next action is displayed on the Next Actions tab
+  add + for project edit page
+    you should be able to add a new action to the project
+  display projects without actions with red color
+    you should easily spot the projects without next action
+  add badge for "bad" projects for project tab
+    you should easly spot that there are projects without next action
