@@ -1,5 +1,5 @@
 import { Tab } from "./tab.js"
-import { todo, calculateHash, projectNextAction } from "../data.js"
+import { todo, projectNextAction } from "../data.js"
 
 export class Actions extends Tab {
     constructor() {
@@ -17,9 +17,9 @@ export class Actions extends Tab {
         this.header.classList.remove("active")
         this.header.classList.add("review")
 
-        const action = todo.findActionById(currentAction)
+        const [action, projectId] = todo.findActionById(currentAction)
         this.content.innerHTML = `<div class="center-text">
-                <span class="action large" id="${currentAction}}">${action}</span>
+                <span class="action large" id="${currentAction}}">${action.name}</span>
                 </div>
                 <div class="menus">
                     <div id="stop">stop</div>
@@ -28,6 +28,11 @@ export class Actions extends Tab {
             `
         this.content.querySelector("#stop").addEventListener("click", (event) => {
             todo.setCurrentAction(undefined)
+            this.showList()
+        })
+        this.content.querySelector("#done").addEventListener("click", (event) => {
+            todo.setCurrentAction(undefined)
+            todo.removeAction(currentAction, projectId)
             this.showList()
         })
     }
@@ -39,7 +44,7 @@ export class Actions extends Tab {
         const rows = todo.raw.projects
             .filter(project => projectNextAction(project))
             .map(project => `<div>
-                <span class="action large" id="${calculateHash(projectNextAction(project))}">${projectNextAction(project)}</span>
+                <span class="action large" id="${projectNextAction(project).id}">${projectNextAction(project).name}</span>
                 <span class="project small">${project.name}</span>
                 </div>`)
             .join("")

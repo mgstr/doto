@@ -132,7 +132,7 @@ export class Inbox extends Tab {
                     dod: this.content.querySelector("#dod").value,
                     steps: Array.from(this.content.querySelectorAll(".step"))
                         .filter(step => step.value)
-                        .map(step => step.value)
+                        .map(step => { return { name: step.value } })
                 }
                 console.log("create", project)
                 todo.addProject(project)

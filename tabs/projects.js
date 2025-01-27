@@ -10,7 +10,7 @@ export class Projects extends Tab {
         super.activate()
 
         const projects = todo.raw.projects.map(project =>
-            `<div><span class="project large">${project.name}</span> <span class="action small">${project.steps[0]}</span></div>`
+            `<div><span class="project large">${project.name}</span> <span class="action small">${project.steps[0]?.name}</span></div>`
         ).join("")
         this.content.innerHTML = `<div class="projects">${projects}</div>`
 
@@ -23,7 +23,7 @@ export class Projects extends Tab {
     editProject(name) {
         const project = todo.raw.projects.find(project => project.name === name)
         const steps = project.steps.map(step =>
-            `<div><span class="action editable">${step}</span></div`
+            `<div><span class="action editable">${step.name}</span></div`
         ).join("")
         this.content.innerHTML = `<div class="projects-root">
             <div class="project large"><span class="editable">${project.name}</span></div>

@@ -1,14 +1,5 @@
 import { storage } from "./storage.js"
-
-export function calculateHash(input) {
-    let hash = 0;
-    for (let i = 0; i < input.length; i++) {
-        const char = input.charCodeAt(i);
-        hash = (hash << 5) - hash + char;
-        hash |= 0; // Convert to 32-bit integer
-    }
-    return hash;
-}
+import { createProjectId, createActionId } from "./ids.js"
 
 export function projectNextAction(project) {
     return project.steps[0]
@@ -30,7 +21,6 @@ class ToDoModel {
 
     async init() {
         this.#raw = await data.load()
-        console.log("todo.init", this.#raw)
     }
 
     get raw() { return this.#raw }
@@ -48,6 +38,9 @@ class ToDoModel {
         data.save(this.#raw)
     }
     addProject(project) {
+        project.id = createProjectId()
+        project.steps = project.steps.filter(step => step)
+        project.steps.forEach(step => step.id = createActionId());
         this.#raw.projects.push(project)
         data.save(this.#raw)
     }
@@ -58,8 +51,13 @@ class ToDoModel {
     findActionById(id) {
         const project = this.#raw.projects
             .filter(project => projectNextAction(project))
-            .find(project => calculateHash(projectNextAction(project)))
-        return project && projectNextAction(project)
+            .find(project => projectNextAction(project).id === id)
+        return [project && projectNextAction(project), project.id]
+    }
+    removeAction(actionId, projectId) {
+        console.log("remove action: ", actionId, " from project: ", projectId)
+        const project = this.#raw.projects.find(project => project.id === projectId)
+        project.steps = project.steps.filter(step => step.id !== actionId)
     }
 }
 

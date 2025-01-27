@@ -32,7 +32,6 @@ export class Debug extends Tab {
 
         this.header.querySelector(".fa-trash").addEventListener("click", async (e) => {
             e.stopPropagation()
-            console.log("clean up")
             await todo.clear()
             this.show()
         })
@@ -49,7 +48,6 @@ export class Debug extends Tab {
     }
 
     async show() {
-        console.log("show", todo.raw)
         const json = JSON.stringify(todo.raw, null, 2)
         content.innerHTML = `<pre style="text-align: left;">${json}</pre>`
     }
