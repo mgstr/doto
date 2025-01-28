@@ -40,12 +40,13 @@ export class Projects extends Tab {
 
         const project = todo.raw.projects.find(project => project.name === name)
         const steps = project.steps.map(step =>
-            `<div><span class="action editable">${step.name}</span></div`
+            `<div><i class="fa-solid fa-minus"></i> <span class="action editable">${step.name}</span></div`
         ).join("")
         this.content.innerHTML = `<div class="projects-root">
             <div class="project large"><span class="editable">${project.name}</span></div>
             <div class="dod"><span class="editable">${project.dod}</span></div>
             <div class="steps">${steps}</div>
+            <div><i class="fa-solid fa-plus"></i></div>
         </div>
         `
         this.content.querySelector(".projects-root").addEventListener("dblclick", (event) => {

@@ -117,12 +117,22 @@ body {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+    width: 100%;
+}
+
+.project {
+    width: 100%;
 }
 
 .dod {
     font-style: italic;
     font-size: larger;
     color: lightblue;
+    width: 100%;
+}
+
+.steps {
+    width: 100%;
 }
 
 .large {
@@ -143,4 +153,13 @@ body {
 
 .attention {
     color: red;
+}
+
+.editable-input {
+    border: 2px;
+    width: 95%;
+}
+
+.wide {
+    width: 100%;
 }
