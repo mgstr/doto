@@ -4,6 +4,12 @@ import { Projects } from "./projects.js"
 import { Inbox } from "./inbox.js"
 import { Actions } from "./actions.js"
 
+function findTabId(element) {
+    if (element.classList.contains("tab")) {
+        return element.id
+    }
+    return findTabId(element.parentElement)
+}
 
 class TabsManager {
     constructor() {
@@ -24,7 +30,7 @@ class TabsManager {
     }
 
     switchTo(element) {
-        const id = element.srcElement.id
+        const id = findTabId(element.srcElement)
 
         this.tabs.filter(tab => tab.id !== id).forEach(tab => tab.deactivate())
         this.tabs.find(tab => tab.id === id).activate()

@@ -1,6 +1,6 @@
 const initHeader = (id, name) => {
     const template = document.createElement("template")
-    template.innerHTML = `<div class="tab" id="${id}"><span id="badge"></span>${name}<span id="buttons"></span></div>`
+    template.innerHTML = `<div class="tab" id="${id}"><span id="badge"></span><span id="title">${name}</span><span id="buttons"></span></div>`
     return template.content.firstChild
 }
 
@@ -14,6 +14,11 @@ export class Tab {
         this.content = content
         this.header = initHeader(this.id, this.name)
         tabs.appendChild(this.header)
+    }
+
+    setTitle(title) {
+        const newTitle = title ?? this.name
+        this.header.querySelector("#title").innerText = newTitle
     }
 
     async show() {

@@ -13,6 +13,10 @@ export class Projects extends Tab {
     }
 
     showList() {
+        this.setTitle()
+        this.header.classList.remove("review")
+        this.header.classList.add("active")
+
         const projects = todo.raw.projects.map(project => {
             const action = project.steps[0]?.name
             if (action)
@@ -30,6 +34,10 @@ export class Projects extends Tab {
     }
 
     editProject(name) {
+        this.setTitle("Edit project")
+        this.header.classList.remove("active")
+        this.header.classList.add("review")
+
         const project = todo.raw.projects.find(project => project.name === name)
         const steps = project.steps.map(step =>
             `<div><span class="action editable">${step.name}</span></div`
