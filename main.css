@@ -140,3 +140,7 @@ body {
 .project {
     color: darkgreen;
 }
+
+.attention {
+    color: red;
+}

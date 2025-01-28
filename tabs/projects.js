@@ -9,9 +9,18 @@ export class Projects extends Tab {
     activate() {
         super.activate()
 
-        const projects = todo.raw.projects.map(project =>
-            `<div><span class="project large">${project.name}</span> <span class="action small">${project.steps[0]?.name}</span></div>`
+        this.showList()
+    }
+
+    showList() {
+        const projects = todo.raw.projects.map(project => {
+            const action = project.steps[0]?.name
+            if (action)
+                return `<div><span class="project large">${project.name}</span> <span class="action small">${action}</span></div>`
+            return `<div><span class="project large">${project.name}</span> <span class="action small attention">no next action</span></div>`
+        }
         ).join("")
+
         this.content.innerHTML = `<div class="projects">${projects}</div>`
 
         this.content.querySelectorAll("span.project")
