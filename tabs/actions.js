@@ -14,6 +14,7 @@ export class Actions extends Tab {
     }
 
     showAction(currentAction) {
+        this.setTitle("Next action")
         this.header.classList.remove("active")
         this.header.classList.add("review")
 
@@ -38,6 +39,7 @@ export class Actions extends Tab {
     }
 
     showList() {
+        this.setTitle()
         this.header.classList.remove("review")
         this.header.classList.add("active")
 
