@@ -1,6 +1,19 @@
 import { Tab } from "./tab.js"
 import { todo } from "../data.js"
 
+function newStep(name) {
+    return `<div><i class="fa-solid fa-minus"></i> <span class="action editable">${name}</span></div>`
+}
+
+function simulateDoubleClick(element) {
+    const dblClickEvent = new MouseEvent('dblclick', {
+        bubbles: true,
+        cancelable: true,
+        view: window,
+    });
+    element.dispatchEvent(dblClickEvent);
+}
+
 export class Projects extends Tab {
     constructor() {
         super("Projects")
@@ -39,9 +52,7 @@ export class Projects extends Tab {
         this.header.classList.add("review")
 
         const project = todo.raw.projects.find(project => project.name === name)
-        const steps = project.steps.map(step =>
-            `<div><i class="fa-solid fa-minus"></i> <span class="action editable">${step.name}</span></div`
-        ).join("")
+        const steps = project.steps.map(step => newStep(step.name)).join("")
         this.content.innerHTML = `<div class="projects-root">
             <div class="project large"><span class="editable">${project.name}</span></div>
             <div class="dod"><span class="editable">${project.dod}</span></div>
@@ -49,6 +60,13 @@ export class Projects extends Tab {
             <div><i class="fa-solid fa-plus"></i></div>
         </div>
         `
+        this.content.querySelector(".fa-plus").addEventListener("click", (event) => {
+            const template = document.createElement("template")
+            template.innerHTML = newStep("")
+            const newStepElement = template.content.firstChild
+            this.content.querySelector(".steps").appendChild(newStepElement)
+            simulateDoubleClick(newStepElement.querySelector(".editable"))
+        })
         this.content.querySelector(".projects-root").addEventListener("dblclick", (event) => {
             const target = event.target;
 
