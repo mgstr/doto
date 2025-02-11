@@ -69,19 +69,23 @@ export class Projects extends Tab {
                 project.dod = newValue
             } else {
                 console.log(`update step to ${newValue} for ${element.id}`)
-                project.steps.forEach(step => {
-                    console.log(`"${step.id}" '${element.id}'`)
-                    if (step.id === element.id) {
-                        console.log(`old ${step.name} - new ${newValue}`)
-                        step.name = newValue
-                    }
-                })
+                if (element.id === "__new__") {
+                    project.steps.push({ id: createActionId(), name: newValue })
+                } else {
+                    project.steps.forEach(step => {
+                        console.log(`"${step.id}" '${element.id}'`)
+                        if (step.id === element.id) {
+                            console.log(`old ${step.name} - new ${newValue}`)
+                            step.name = newValue
+                        }
+                    })
+                }
             }
             todo.save()
         }
         this.content.querySelector(".fa-plus").addEventListener("click", (event) => {
             const template = document.createElement("template")
-            template.innerHTML = newStep({ name: "", id: createActionId() })
+            template.innerHTML = newStep({ name: "", id: "__new__" })
             const newStepElement = template.content.firstChild
             this.content.querySelector(".steps").appendChild(newStepElement)
             simulateDoubleClick(newStepElement.querySelector(".editable"))
