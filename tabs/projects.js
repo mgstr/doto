@@ -1,5 +1,6 @@
 import { Tab } from "./tab.js"
 import { todo } from "../data.js"
+import { createActionId } from "../ids.js"
 
 function newStep(step) {
     return `<div><i class="fa-solid fa-minus"></i> <span class="action editable" id="${step.id}">${step.name}</span></div>`
@@ -76,10 +77,11 @@ export class Projects extends Tab {
                     }
                 })
             }
+            todo.save()
         }
         this.content.querySelector(".fa-plus").addEventListener("click", (event) => {
             const template = document.createElement("template")
-            template.innerHTML = newStep("")
+            template.innerHTML = newStep({ name: "", id: createActionId() })
             const newStepElement = template.content.firstChild
             this.content.querySelector(".steps").appendChild(newStepElement)
             simulateDoubleClick(newStepElement.querySelector(".editable"))

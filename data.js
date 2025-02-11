@@ -23,6 +23,10 @@ class ToDoModel {
         this.#raw = await data.load()
     }
 
+    async save() {
+        data.save(this.#raw)
+    }
+
     get raw() { return this.#raw }
     async clear() {
         await chrome.storage.local.clear()
