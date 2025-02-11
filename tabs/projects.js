@@ -1,8 +1,8 @@
 import { Tab } from "./tab.js"
 import { todo } from "../data.js"
 
-function newStep(name) {
-    return `<div><i class="fa-solid fa-minus"></i> <span class="action editable">${name}</span></div>`
+function newStep(step) {
+    return `<div><i class="fa-solid fa-minus"></i> <span class="action editable" id="${step.id}">${step.name}</span></div>`
 }
 
 function simulateDoubleClick(element) {
@@ -52,7 +52,7 @@ export class Projects extends Tab {
         this.header.classList.add("review")
 
         const project = todo.raw.projects.find(project => project.name === name)
-        const steps = project.steps.map(step => newStep(step.name)).join("")
+        const steps = project.steps.map(step => newStep(step)).join("")
         this.content.innerHTML = `<div class="projects-root">
             <div class="project large"><span class="editable">${project.name}</span></div>
             <div class="dod"><span class="editable">${project.dod}</span></div>
@@ -60,13 +60,21 @@ export class Projects extends Tab {
             <div><i class="fa-solid fa-plus"></i></div>
         </div>
         `
-        function updateValue(newValue, classes) {
+        function updateValue(element, classes) {
+            const newValue = element.textContent
             if (classes.contains("project")) {
                 project.name = newValue
             } else if (classes.contains("dod")) {
                 project.dod = newValue
             } else {
-                console.log(`update step to ${newValue}`)
+                console.log(`update step to ${newValue} for ${element.id}`)
+                project.steps.forEach(step => {
+                    console.log(`"${step.id}" '${element.id}'`)
+                    if (step.id === element.id) {
+                        console.log(`old ${step.name} - new ${newValue}`)
+                        step.name = newValue
+                    }
+                })
             }
         }
         this.content.querySelector(".fa-plus").addEventListener("click", (event) => {
@@ -87,6 +95,7 @@ export class Projects extends Tab {
                 const input = document.createElement("input")
                 input.type = "text"
                 input.value = currentText
+                input.id = target.id
                 input.className = "editable-input"
 
                 // Remember parent element
@@ -113,11 +122,12 @@ export class Projects extends Tab {
                     const span = document.createElement("span")
                     span.className = "editable"
                     span.textContent = newText
+                    span.id = input.id
 
                     // Replace the input with the span
                     input.replaceWith(span)
 
-                    updateValue(newText, parent.classList)
+                    updateValue(span, parent.classList)
                 }
 
                 // Handle Enter key to save changes
