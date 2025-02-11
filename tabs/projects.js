@@ -60,6 +60,15 @@ export class Projects extends Tab {
             <div><i class="fa-solid fa-plus"></i></div>
         </div>
         `
+        function updateValue(newValue, classes) {
+            if (classes.contains("project")) {
+                project.name = newValue
+            } else if (classes.contains("dod")) {
+                project.dod = newValue
+            } else {
+                console.log(`update step to ${newValue}`)
+            }
+        }
         this.content.querySelector(".fa-plus").addEventListener("click", (event) => {
             const template = document.createElement("template")
             template.innerHTML = newStep("")
@@ -72,52 +81,57 @@ export class Projects extends Tab {
 
             // Check if the clicked element is the editable span
             if (target.classList.contains("editable")) {
-                const currentText = target.textContent;
+                const currentText = target.textContent
 
                 // Create an input element to replace the span
-                const input = document.createElement("input");
-                input.type = "text";
-                input.value = currentText;
-                input.className = "editable-input";
+                const input = document.createElement("input")
+                input.type = "text"
+                input.value = currentText
+                input.className = "editable-input"
+
+                // Remember parent element
+                const parent = target.parentNode
 
                 // Replace the span with the input
-                target.replaceWith(input);
+                target.replaceWith(input)
 
                 // Focus the input and select its content
-                input.focus();
-                input.select();
+                input.focus()
+                input.select()
 
                 // Flag to prevent multiple handlers from conflicting
-                let isReplaced = false;
+                let isReplaced = false
 
                 // Function to replace input with span
                 const replaceInputWithSpan = () => {
                     if (isReplaced) return; // Ensure this runs only once
-                    isReplaced = true;
+                    isReplaced = true
 
-                    const newText = input.value;
+                    const newText = input.value
 
                     // Create a new span with the updated text
-                    const span = document.createElement("span");
-                    span.className = "editable";
-                    span.textContent = newText;
+                    const span = document.createElement("span")
+                    span.className = "editable"
+                    span.textContent = newText
 
                     // Replace the input with the span
-                    input.replaceWith(span);
-                };
+                    input.replaceWith(span)
+
+                    updateValue(newText, parent.classList)
+                }
 
                 // Handle Enter key to save changes
                 input.addEventListener("keydown", (e) => {
                     if (e.key === "Enter") {
-                        replaceInputWithSpan();
+                        replaceInputWithSpan()
                     }
-                });
+                })
 
                 // Handle blur event to save changes if clicked outside
                 input.addEventListener("blur", () => {
-                    replaceInputWithSpan();
-                });
+                    replaceInputWithSpan()
+                })
             }
-        });
+        })
     }
 }
