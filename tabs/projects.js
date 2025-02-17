@@ -149,5 +149,11 @@ export class Projects extends Tab {
                 })
             }
         })
+        this.content.querySelectorAll(".fa-minus").forEach(button => button.addEventListener("click", (event) => {
+            const target = event.target.parentNode
+            const stepId = target.querySelector(".editable").id
+            todo.removeAction(stepId, project.id)
+            target.remove()
+        }))
     }
 }
